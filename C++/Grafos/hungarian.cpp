@@ -8,12 +8,12 @@ ld a[maxn][maxn] ;
 int ans[maxn] ; 
 
 // Hungaro
-//
 // Resolve o problema de assignment (matriz n x m) -> liga os caras
 // de n com os caras de m 
 // Colocar os valores da matriz em 'a' (pode < 0)
 // 0 indexado 
-// resolve problema de matching 
+// resolve problema de matching -> calcula a soma minima
+// pareando os kras de forma perfeita
 // ligação entre o cara i e j tem um custo 
 // tem que depender só de i e j - n pode depender de outras lig
 // O(n^3)
