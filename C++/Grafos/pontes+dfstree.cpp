@@ -1,11 +1,3 @@
-#include<bits/stdc++.h>
-using namespace std ; 
-
-const int maxn = 1e5 + 5 ; 
-
-int n, timer, m, a, b, tin[maxn], vis[maxn], low[maxn], maior, dist[maxn], comp[maxn], br[maxn] ;
-vector<pair<int, int>> grafo[maxn] ; 
-vector<int> tree[maxn] ; 
 
 void finding_b(int v, int p){
 
