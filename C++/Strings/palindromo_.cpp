@@ -1,15 +1,3 @@
-#include<bits/stdc++.h>
-#define int long long
-using namespace std ; 
- 
-const int prime = 31 ; 
-const int maxn = 3e5 + 5 ; 
-const int mod = 1e9 + 7 ; 
- 
-int n, m, pref[maxn], pot[maxn], inv[maxn] ; 
-string s ; 
-int bit1[maxn], bit2[maxn] ;  
- 
 struct BIT{
  
 	void upd(int pos, int v){
