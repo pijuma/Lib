@@ -6,7 +6,8 @@ c: A capacidade da aresta principal que vai de u para v.
 rc: A capacidade da aresta reversa que vai de v para u.
 s: no de origem 
 sink: no destino 
-cut: acha mincut -> menor conjunto de arestas que precisamos tirar para desconectar a fonte do destino 
+cut: acha mincut -> menor conjunto de arestas que precisamos tirar para desconectar a fonte do destino -> funciona pra se tiver peso 
+ele pega a qtd q minimiza a soma 
 */
     
 #include<bits/stdc++.h>
