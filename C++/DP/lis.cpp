@@ -1,4 +1,11 @@
-int v[maxn], n, dp[maxn] ;
+    #include<bits/stdc++.h>
+    #define int long long
+    using namespace std ;
+     
+    const int inf = 1e9 + 1 ;
+    const int maxn = 1e3 + 5 ;
+     
+    int v[maxn], n, dp[maxn] ;
     map<int,int> bit ;
      
     struct BIT{
