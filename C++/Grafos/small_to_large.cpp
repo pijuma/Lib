@@ -2,11 +2,6 @@
 // swapa a info dele com o pai 
 // faz pros pequenos mudando os valores na mao 
 // (nlog) 
-#include<bits/stdc++.h>
-#define int long long
-using namespace std ; 
-
-const int maxn = 1e5 + 5 ; 
 
 int n, x[maxn], ans[maxn], sz[maxn] ; 
 vector<int> grafo[maxn] ; 
