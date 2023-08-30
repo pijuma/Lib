@@ -1,11 +1,4 @@
-#include<bits/stdc++.h>
-using namespace std ; 
-
-const int maxn = 2e5 + 5 ; 
-
-int n, m, timer, tin[maxn], low[maxn], pto_art[maxn] ; 
-vector<int> grafo[maxn] ; 
-
+// se a gnt tirar o vertice cria +1 comp 
 void find_b(int v, int p){
 
 	tin[v] = low[v] = ++timer ; 
