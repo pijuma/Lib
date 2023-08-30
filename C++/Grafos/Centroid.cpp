@@ -1,8 +1,3 @@
-#include<bits/stdc++.h>
-using namespace std ; 
-
-const int maxn = 2e5 + 5 ; 
-
 int n, sz[maxn], f ; 
 bool mark[maxn], ok ; 
 vector<int> grafo[maxn], grafoc[maxn] ; 
@@ -39,17 +34,4 @@ void make_a(int v, int p){
 
 }
 
-int main(){
-
-	cin >> n ; 
-
-	for(int i = 1, a, b ; i < n ; i++){
-		cin >> a >> b ; 
-		grafo[a].push_back(b), grafo[b].push_back(a) ; 
-	}
-
-	make_a(1, 1) ; 
-
-	cout << f << "\n" ; 
-
-}
+// chamar make_a(1,1)
