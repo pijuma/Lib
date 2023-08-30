@@ -1,21 +1,42 @@
-const int N = 300;
-
+// O(V^2E) 
+/*acha fluxo máximo
+u: O nó de origem da aresta.
+v: O nó de destino da aresta.
+c: A capacidade da aresta principal que vai de u para v.
+rc: A capacidade da aresta reversa que vai de v para u.
+s: no de origem 
+sink: no destino 
+*/
+    
+#include<bits/stdc++.h>
+#define pb push_back 
+#define int long long
+#define ll long long
+using namespace std ;
+ 
+const int LLINF = 1e18 ; 
+const int N = 505;
+ 
+int n, m ; 
+ 
 struct Dinic {
+ 
     struct Edge{
         int from, to; ll flow, cap;
     };
+ 
     vector<Edge> edge;
-
+ 
     vector<int> g[N];
     int ne = 0;
     int lvl[N], vis[N], pass;
     int qu[N], px[N], qt;
-
+ 
     ll run(int s, int sink, ll minE) {
         if(s == sink) return minE;
-
+ 
         ll ans = 0;
-
+ 
         for(; px[s] < (int)g[s].size(); px[s]++) {
             int e = g[s][ px[s] ];
             auto &v = edge[e], &rev = edge[e^1];
@@ -60,7 +81,7 @@ struct Dinic {
         Edge e = {u, v, 0, c};
         edge.pb(e);
         g[u].push_back(ne++);
-
+ 
         e = {v, u, 0, rc};
         edge.pb(e);
         g[v].push_back(ne++);
@@ -76,11 +97,29 @@ struct Dinic {
     }
     vector<pair<int, int>> cut() {
         vector<pair<int, int>> cuts;
-        for (auto [from, to, flow, cap]: edge) {
-            if (flow == cap and vis[from] == pass and vis[to] < pass and cap>0) {
-                cuts.pb({from, to});
+        for (auto a : edge) {
+            if (a.flow == a.cap and vis[a.from] == pass and vis[a.to] < pass and a.cap>0) {
+                cuts.pb({a.from, a.to});
             }
         }
         return cuts;
     }
-};
+ 
+} ;
+ 
+int32_t main(){
+ 
+    ios_base::sync_with_stdio(false) ; cin.tie(NULL) ;
+ 
+    cin >> n >> m ; 
+ 
+    Dinic dinic ;
+ 
+    for(int i = 1 ; i <= m ; i++){
+        int a, b, c ; cin >> a >> b >> c ; 
+        dinic.addEdge(a, b, c, 0) ; 
+    }
+ 
+    cout << dinic.flow(1, n) << "\n" ;
+ 
+}
