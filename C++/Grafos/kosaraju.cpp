@@ -1,25 +1,40 @@
-vector<int> g[N], gi[N]; // grafo invertido
-int vis[N], comp[N]; // componente conexo de cada vertice
-stack<int> S;
-
-void dfs(int u){
-    vis[u] = 1;
-    for(auto v: g[u]) if(!vis[v]) dfs(v);
-    S.push(u);
+stack<int> fila ; 
+ 
+void dfs(int v){
+	if(vis[v]) return ; 
+	vis[v] = 1 ; 
+	for(auto a : grafo[v]) dfs(a) ;
+	fila.push(v) ;
 }
-
-void scc(int u, int c){
-    vis[u] = 1; comp[u] = c;
-    for(auto v: gi[u]) if(!vis[v]) scc(v, c);
+ 
+void dfs2(int v){
+	if(comp[v]) return ; 
+	comp[v] = c ; 
+	for(auto a : grafo2[v]) dfs2(a) ; 
 }
-
-void kosaraju(int n){
-    for(int i=0;i<n;i++) vis[i] = 0;
-    for(int i=0;i<n;i++) if(!vis[i]) dfs(i);
-    for(int i=0;i<n;i++) vis[i] = 0;
-    while(S.size()){
-        int u = S.top();
-        S.pop();
-        if(!vis[u]) scc(u, u);
-    }
+ 
+int32_t main(){
+ 
+	ios_base::sync_with_stdio(false) ; cin.tie(NULL) ; 
+ 
+	cin >> n >> m ; 
+ 
+	for(int i = 1 ; i <= m ; i++){
+		int a, b ; cin >> a >> b ; 
+		grafo[a].push_back(b) ; grafo2[b].push_back(a) ; 
+	}
+ 
+	for(int i = 1 ; i <= n ; i++){
+		if(!vis[i]) dfs(i) ; 
+	}
+ 
+	while(!fila.empty()){
+		int at = fila.top() ; fila.pop() ; 
+		if(!comp[at]) {++c; dfs2(at) ; }
+	}
+ 
+	cout << c << "\n" ;
+	for(int i = 1 ; i <= n ; i++) cout << comp[i] << " " ; 
+	cout << "\n" ; 
+ 
 }
