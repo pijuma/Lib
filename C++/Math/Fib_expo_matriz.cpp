@@ -1,44 +1,72 @@
-struct Matrix {
-    vector<vl> m;
-    int r, c;
+struct MAT{
 
-    Matrix(vector<vl> mat) {
-        m = mat;
-        r = mat.size();
-        c = mat[0].size();
-    }
+    int v[2][2] ; 
 
-    Matrix(int row, int col, bool ident=false) {
-        r = row; c = col;
-        m = vector<vl>(r, vl(c, 0));
-        if(ident) {
-            for(int i = 0; i < min(r, c); i++) {
-                m[i][i] = 1;
-            }
+    MAT(){
+        for(int i = 0 ; i < 2 ; i++){
+            for(int j = 0 ; j < 2 ; j++) v[i][j] = 0 ; 
         }
     }
 
-    Matrix operator*(const Matrix &o) const {
-        assert(c == o.r); // garantir que da pra multiplicar
-        vector<vl> res(r, vl(o.c, 0));
+    void id(){
+        for(int i = 0 ; i < 2 ; i++) v[i][i] = 1 ; 
+    }
 
-        for(int i = 0; i < r; i++) {
-            for(int k = 0; k < c; k++) {
-                for(int j = 0; j < o.c; j++) {
-                    res[i][j] = (res[i][j] + m[i][k]*o.m[k][j]) % MOD;
-                }
+} ;
+
+int add(int a, int b){ return (a+b)%mod ; }
+int M(int a, int b){ return (a*b)%mod ; }
+
+typedef struct MAT matriz ;
+
+matriz mult(matriz a, matriz b){
+    
+    matriz ans ; 
+
+    for(int i = 0 ; i < 2 ; i++){
+        for(int j = 0 ; j < 2 ; j++){
+            for(int k = 0 ; k < 2 ; k++){
+                ans.v[i][j] = add(ans.v[i][j], M(a.v[i][k], b.v[k][j])) ;
             }
         }
-
-        return Matrix(res);
     }
-};
+    
+    return ans ; 
 
-Matrix fexp(Matrix b, int e, int n) {
-    if(e == 0) return Matrix(n, n, true); // identidade
-    Matrix res = fexp(b, e/2, n);
-    res = (res * res);
-    if(e%2) res = (res * b);
+}
 
-    return res;
+matriz exp(matriz a, int b){
+
+    matriz ans ; ans.id() ;
+
+    while(b){
+        if(b&1) ans = mult(ans, a) ;
+        a = mult(a, a) ; b >>= 1 ; 
+    }
+
+    return ans ; 
+
+}
+
+int32_t main(){
+
+    int n ; cin >> n ; 
+
+    if(n <= 1){
+        cout << n << "\n" ; return 0 ; 
+    }
+
+    matriz base ; 
+    base.v[0][0] = 1 , base.v[0][1] = 1 ; 
+    base.v[1][0] = 1, base.v[1][1] = 0 ; 
+
+    matriz ini ; ini.v[0][0] = 1 ; 
+
+    matriz resp ; 
+
+    resp = exp(base, n-1) ;
+    resp = mult(resp, ini) ;
+
+    cout << resp.v[0][0] << "\n" ;
+
 }
