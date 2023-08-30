@@ -1,15 +1,3 @@
-#include<bits/stdc++.h>
-#define int long long
-#define pii pair<int,int> 
-#define f first 
-#define s second 
-using namespace std ; 
-
-const int maxn = 1005 ; 
-
-int n ; 
-pii p[maxn] ;
-
 int cross(pii a, pii b){ return a.f*b.s - a.s*b.f ; }
 
 //soma tds as areas dos triangulos 
