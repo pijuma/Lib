@@ -1,16 +1,9 @@
-#include<bits/stdc++.h>
-#define int long long
-#define pii pair<int,int> 
-using namespace std ; 
- 
-const int inf = 1e9 + 2 ; 
+ const int inf = 1e9 + 2 ; 
 const int maxn = 2e5 + 5 ;  
 int contem[maxn] ;
  
 int32_t main(){
- 
-    ios_base::sync_with_stdio(false) ; cin.tie(NULL) ; 
-    
+	
     int n, k ; cin >> n >> k ; 
  
     vector<pair<pii, int>> fila ; 
@@ -53,10 +46,7 @@ int32_t main(){
  
 }
 
-//cses
-#include<bits/stdc++.h>
-using namespace std ; 
- 
+//cses 
 const int maxn = 2e5 + 5 ; 
  
 int n, x, y ; 
@@ -64,9 +54,7 @@ pair<int,int> pto[maxn], resp[maxn] ;
 map<pair<int,int>, int> contem, cont ; 
  
 int main(){
- 
 	cin >> n ; 
- 
 	for(int i = 1 ; i <= n ; i++){
 		cin >> pto[i].first >> pto[i].second ;
 		pto[i].second *= -1 ; 
