@@ -34,7 +34,7 @@ void add(int id){
     if(f_freq[freq[v[id]]]) f_freq[freq[v[id]]]-- ; 
     freq[v[id]]++ ;
     f_freq[freq[v[id]]]++ ; 
-    mx_freq = max(mx_freq, freq[v[id]]) ;  
+    mx_freq = max(mx_freq, freq[v[id]]) ;  //possivel alteração
 }
 
 void remove(int id){
@@ -43,7 +43,7 @@ void remove(int id){
     if(freq[v[id]]){
         f_freq[freq[v[id]]]++ ; 
     }
-    while(mx_freq >= 1 && f_freq[mx_freq]==0) mx_freq-- ; 
+    while(mx_freq >= 1 && f_freq[mx_freq]==0) mx_freq-- ; //subtrai enquanto n acha um novo maximo 
 }
 
 void solve(){
@@ -80,11 +80,6 @@ void solve(){
         if(mx_freq <= ceil(sz/2)) ans = 1 ;
         else ans = (2*mx_freq) - sz  ; 
         resp[qr[i].id] = ans ; 
-        // se o max freq no meu intervalo 
-        // tem freq < n/2 ent a resp eh 1 
-        // se n eu agrupo kras n +freqs+1 com o mx freq e somo sozinho oq precisar dps
-        //cout << mx_freq << "\n" ; 
-
     }
 
     for(int i = 1 ; i <= q ; i++) cout << resp[i] << "\n" ; 
