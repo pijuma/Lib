@@ -1,3 +1,25 @@
+vector<int> table(){
+	vector<int> ans(pattern.size(), 0) ; 
+	int j = 0 ; 
+	for(int i = 1 ; i < pattern.size() ; i++){
+		while(j > 0 && pattern[i] != pattern[j]) j = ans[j-1] ; 
+		if(pattern[i] == pattern[j]) j++ ; 
+		ans[i] = j ; 
+	}
+	return ans ; 
+}
+
+vector<int> kmp(vector<int> pi){
+	vector<int> ans(s.size(), 0) ; 
+	int j = 0 ; 
+	for(int i = 0 ; i < s.size() ; i++){
+		while(j > 0 && pattern[j] != s[i]) j = pi[j-1] ; 
+		if(pattern[j] == s[i]) j++ ; 
+		ans[i] = j ; 
+	}
+	return ans ; 
+}
+
 string p;
 int neighbor[N];
 int walk(int u, char c) { // leader after inputting `c`
