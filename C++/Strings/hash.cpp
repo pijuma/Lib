@@ -1,62 +1,55 @@
 #include<bits/stdc++.h>
-#define int long long 
-using namespace std ; 
+using namespace std ;
 
+#define ll long long 
+
+const int prime = 911382323 ; 
+const int prime2 = 31 ;
+const int mod2 = 1e9 + 7 ;
+const int mod = 972663749 ; 
 const int maxn = 1e6 + 5 ; 
-const int mod = 1e9 + 7 ; 
-const int prime = 37 ; 
 
-int n, m, t, p[maxn], inv[maxn], pot[maxn], other ; 
-string a, b ; 
+ll inv[maxn], pot[maxn] ;
+vector<ll> Hash ; 
 
-int exp(int a, int b){
-
-	int ans = 1 ; 
-
-	if(b == 0) return 1LL ; 
-
+ll exp(ll a, ll b, int m){
+	ll ans = 1 ; 
 	while(b){
-		if(b&1) ans = (ans*a)%mod ; 
-		a = (a*a)%mod ; 
+		if(b&1) ans = (ans*a)%m ; 
 		b >>= 1 ; 
+		a = (a*a)%m ; 
 	}
-
 	return ans ; 
-
 }
 
-int32_t main(){
+void calc_Hash(string s, int m, int p){
+	ll pot = 1 ; 
+	for(int i = 0 ; i < s.size() ; i++){
+		if(i == 0) Hash[i] = ((s[i]-'a'+1)*pot)%m ;
+		else Hash[i] = (Hash[i-1] + ((s[i]-'a'+1)*pot)%m)%m ; 
+		pot = (pot*p)%m ;
+	}
+}
 
-	cin >> a >> b ; 
+ll Hash_inter(int l, int r, int m, int p){
+	ll sum = Hash[r] ; 
+	if(l) sum = (sum + m - Hash[l-1])%m ;
+	sum = (sum * inv[l])%m ;
+	return sum ;   
+}
 
-	n = a.size(), m = b.size() ; 
+int main(){
 
-	pot[0] = 1LL ; 
+	ios_base::sync_with_stdio(false) ; cin.tie(NULL) ;
 
-	for(int i = 1 ; i < maxn ; i++) pot[i] = (pot[i-1]*prime)%mod ; 
+	string s ; cin >> s ; 
+	Hash.resize(s.size(), 0) ;
+	calc_Hash(s, mod, prime) ;
 
-	inv[0] = 1LL ; 
-    inv[1] = exp(prime, mod - 2) ; 
-
-    for(int i = 2 ; i < maxn ; i++) inv[i] = (inv[i-1]*inv[1])%mod ; 
-
-    p[0] = ((a[0]-'a')+1) ;
-    
-    for(int i = 1 ; i < n ; i++) p[i] = (p[i-1]+((a[i]-'a'+1)*pot[i])%mod)%mod ;
-
-    other = (b[0]-'a'+1) ; 
-    for(int i = 1 ; i < m ; i++) other = (other + ((b[i]-'a'+1)*pot[i])%mod)%mod ; 
-
-    int ans = 0 ; 
-
-    for(int i = 0 ; i + m - 1 < n ; i++){
-    	int val = p[i+m-1] ; 
-    	if(i) val -= p[i-1] ; 
-    	val = (val + mod)%mod ; 
-    	val = (val*inv[i])%mod ; 
-    	if(val == other) ans++ ; 
-    }
-
-    cout << ans << "\n" ; 
+	pot[0] = inv[0] = 1LL ; 
+	inv[1] = exp(prime, mod-2, mod) ; 
+ 
+	for(int i = 1 ; i < s.size() ; i++) pot[i] = (pot[i-1]*prime)%mod ; 
+	for(int i = 2 ; i < s.size() ; i++) inv[i] = (inv[i-1]*inv[1])%mod ; 
 
 }
