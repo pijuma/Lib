@@ -1,50 +1,108 @@
-#define rep(i,l,r) for (int i = (l); i < (r); i++)
-struct TwoSat { // copied from kth-competitive-programming/kactl
-	int N;
-	vector<vi> gr;
-	vi values; // 0 = false, 1 = true
-	TwoSat(int n = 0) : N(n), gr(2*n) {}
-	int addVar() { // (optional)
-		gr.emplace_back();
-		gr.emplace_back();
-		return N++;
-	}
-	void either(int f, int j) {
-		f = max(2*f, -1-2*f);
-		j = max(2*j, -1-2*j);
-		gr[f].push_back(j^1);
-		gr[j].push_back(f^1);
-	}
-	void atMostOne(const vi& li) { // (optional)
-		if ((int)li.size() <= 1) return;
-		int cur = ~li[0];
-		rep(i,2,(int)li.size()) {
-			int next = addVar();
-			either(cur, ~li[i]);
-			either(cur, next);
-			either(~li[i], next);
-			cur = ~next;
-		}
-		either(cur, ~li[1]);
-	}
-	vi _val, comp, z; int time = 0;
-	int dfs(int i) {
-		int low = _val[i] = ++time, x; z.push_back(i);
-		for(int e : gr[i]) if (!comp[e])
-			low = min(low, _val[e] ?: dfs(e));
-		if (low == _val[i]) do {
-			x = z.back(); z.pop_back();
-			comp[x] = low;
-			if (values[x>>1] == -1)
-				values[x>>1] = x&1;
-		} while (x != i);
-		return _val[i] = low;
-	}
-	bool solve() {
-		values.assign(N, -1);
-		_val.assign(2*N, 0); comp = _val;
-		rep(i,0,2*N) if (!comp[i]) dfs(i);
-		rep(i,0,N) if (comp[2*i] == comp[2*i+1]) return 0;
-		return 1;
-	}
-};
+/*
+Configuração valida para que a proposicao logica no formato 
+(p1Up2)^(p3Up2)^.... seja verdade 
+*/
+
+#include<bits/stdc++.h>
+using namespace std ; 
+
+const int maxn = 2e5 + 5 ; 
+
+int n, m, ct ;
+int vis[maxn], comp[maxn] ;
+bool ans[maxn] ;   
+vector<int> grafo[maxn], grafo_i[maxn] ; 
+stack<int> fila ; 
+
+int nega(int x){
+    if(x <= m) return x + m ; 
+    return x - m ; 
+}
+
+/*
+p1->p2 
+contrapositiva: !p2->!p1
+p1->p2 = !p1Up2 
+*/
+
+void add_imp(int a, int b){
+    grafo[a].push_back(b) ; grafo_i[b].push_back(a) ;
+}
+
+void add_or(int p1, int p2){
+    add_imp(nega(p1), p2) ;
+    add_imp(nega(p2), p1) ;
+}
+
+void add_xor(int a, int b){
+    add_or(a, b) ; add_or(nega(a), nega(b)) ;    
+}
+
+/*
+pra forçar algum valor ser verdade adiciona !p -> p 
+pra forçar ser falo p->!p
+*/
+
+void dfs(int v, int p){
+
+    vis[v] = 1 ; 
+
+    for(auto a : grafo[v]){
+        if(vis[a] || a == p) continue ; 
+        dfs(a, v) ;  
+    }
+
+    fila.push(v) ; 
+
+}
+
+void dfs2(int v, int p){
+
+    comp[v] = ct ; 
+
+    //cout << v << " " << ct << "\n" ; 
+
+    for(auto a : grafo_i[v]){
+        if(a == p || comp[a]) continue ; 
+        dfs2(a, v) ; 
+    }
+
+}
+
+int main(){
+
+    cin >> n >> m ; 
+
+    for(int i = 1 ; i <= n ; i++){
+        int p1, p2 ;
+        char op, op2 ; cin >> op >> p1 ; 
+        cin >> op2 >> p2 ; 
+        if(op == '-') p1 = nega(p1) ; 
+        if(op2 == '-') p2 = nega(p2) ; 
+        add_or(p1, p2) ; 
+    }
+
+    for(int i = 1 ; i <= 2*m ; i++){
+        if(!vis[i]) dfs(i, i) ;
+    }
+
+    while(fila.size()){
+        int at = fila.top() ; fila.pop() ; 
+        if(comp[at]) continue ; 
+        ct++ ; dfs2(at, at) ;
+    }
+
+    for(int i = 1 ; i <= m ; i++){
+        if(comp[i] == comp[nega(i)]){
+            cout << "IMPOSSIBLE\n"; return 0 ; 
+        }
+        ans[i] = (comp[i] > comp[nega(i)]) ; 
+    }
+
+    for(int i = 1 ; i <= m ; i++){
+        cout << (ans[i] ? "+ " : "- ") ; 
+    }
+    
+    cout << "\n" ;
+
+} 
