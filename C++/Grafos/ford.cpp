@@ -1,6 +1,6 @@
 /*
 acha max_flow 
-que é igual em valor ao min_cut 
+que é igual em valor ao min_cut (arestas no min_cut limitam o fluxo max) 
 com otimização "scaling algorithm" O(m^2*log(MaxC)) - rapido enough 
 */
 
