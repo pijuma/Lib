@@ -21,6 +21,8 @@ const int N = 505;
  
 int n, m ; 
 int lim ;
+map<pair<int,int>, int> usado ;
+vector<int> cam ; 
 
 struct Dinic {
  
@@ -127,11 +129,10 @@ struct Dinic {
             cout << "\n" ; 
             return 1 ; 
         }
-        for(; px[s] < (int)g[s].size(); px[s]++) {
-            int e = g[s][ px[s] ];
-            auto &v = edge[e] ;
-            if(v.to == p) continue ; 
-            if(ed.f == 0 || usado.find({ed.from, ed.to}) != usado.end()) continue ;
+        for(auto e : g[v]) {
+            auto &ed = edge[e] ;
+            if(ed.to == p) continue ; 
+            if(ed.flow == 0 || usado.find({ed.from, ed.to}) != usado.end()) continue ;
             cam.push_back(ed.to) ; 
             usado[{v, ed.to}] = 1 ;
             bool ok = dfs_edge_dist(ed.to, v, f) ;
