@@ -19,7 +19,7 @@ using namespace std ;
 const int LLINF = 1e18 ; 
 const int N = 505;
  
-int n, m ; 
+int n, m, ar[N][N] ; 
 int lim ;
 map<pair<int,int>, int> usado ;
 vector<int> cam ; 
@@ -129,13 +129,14 @@ struct Dinic {
             cout << "\n" ; 
             return 1 ; 
         }
-        for(auto e : g[v]) {
-            auto &ed = edge[e] ;
+        for(auto& e : g[v]) {
+            auto ed = edge[e];
             if(ed.to == p) continue ; 
-            if(ed.flow == 0 || usado.find({ed.from, ed.to}) != usado.end()) continue ;
+            if(ar[ed.from][ed.to] != 1) continue ; 
+            if(ed.flow < ed.cap || usado.find({ed.from, ed.to}) != usado.end()) continue ;
             cam.push_back(ed.to) ; 
-            usado[{v, ed.to}] = 1 ;
-            bool ok = dfs_edge_dist(ed.to, v, f) ;
+            usado[{ed.from, ed.to}] = 1 ;
+            bool ok = dfs_edge_dist(ed.to, ed.from, f) ;
             cam.pop_back() ; 
             if(ok){ 
                 return 1 ; 
@@ -184,10 +185,12 @@ int32_t main(){
     Dinic dinic ;
  
     for(int i = 1 ; i <= m ; i++){
-        int a, b, c ; cin >> a >> b >> c ; 
-        dinic.addEdge(a, b, c, 0) ; 
+        int a, b, c ; cin >> a >> b ; 
+        ar[a][b] = 1 ; 
+        dinic.addEdge(a, b, 1, 0) ; 
     }
  
-    cout << dinic.flow(1, n) << "\n" ;
+    cout << dinic.edge_disj(1, n) << "\n" ;
+    dinic.recuperar_edge_disj(1, n) ; 
  
 }
