@@ -174,6 +174,41 @@ struct Dinic {
         return flow(s, t) ;
     }
 
+    vector<pair<int,int>> recuperar_matching(){
+        vector<pair<int,int>> resp ; 
+        for(auto a : edge){
+            if(a.from == sink || a.from == source) continue ;
+            if(a.to == sink || a.to == source) continue ; 
+            if(a.to > n || a.to < 1) continue ;
+            if(a.from <= n || a.from > m + n) continue ;  
+            if(!a.flow) continue ; 
+            resp.push_back({a.to, a.from-n}) ; 
+        }
+        return resp ; 
+    }
+
+
+    void matching(int source, int sink){
+        for(int i = 1 ; i <= m ; i++){ // meninas
+            dinic.addEdge(source, i+n, 1, 0) ; 
+        }
+    
+        for(int i = 1 ; i <= n ; i++){ // meninos 
+            dinic.addEdge(i, sink, 1, 0) ; 
+        }
+    
+        for(int i = 1 ; i <= k ; i++){
+            int b, g ; cin >> b >> g ; 
+            //cout << "aresta " << g+n << " " << b << "\n" ; 
+            dinic.addEdge(g+n, b, 1, 0) ;
+        }
+
+        cout << flow(source, sink) << "\n" ; 
+        vector<pair<int,int>> recuperar_matching() ;
+
+    }
+
+
 
 } ;
  
