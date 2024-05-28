@@ -161,14 +161,15 @@ struct Dinic {
     // cuidado que os nodes existiriam de 1 a n e n+1 a 2n 
     //teria que mudar em alguns lugares do code
     int node_disj(int s, int t){
-        //criar aresta indo de A para A1 
-        for(int i = 1 ; i <= n ; i++){
-            addEdge(i, i+n, 1, 0) ; 
+        int capacidade_vert = 0 ; 
+        for(int i = 1 ; i <= n ; i++){//conecta A em A'
+            addEdge(i, i+n, capacidade_vert, 0) ; 
         }
         for(int i = 1 ; i <= m ; i++){
             int a, b, c ; cin >> a >> b >> c ; 
-            a += n ; 
-            addEdge(a, b, c, 0) ; 
+            int A = a, B = b ; 
+            if(A != s && A != t) A += n ; //nós vao ate 2n agr 
+            addEdge(A, B, c, 0) ; 
         }
         return flow(s, t) ;
     }
