@@ -1,6 +1,6 @@
 /*
 grafo bipartido 
-se pegar todos os vertices exceto o min vertex cover = max independent set 
+se pegar todos os vertices exceto o min vertex cover = max independent set (maior conj tal que nenhum nó tem aresta entre si) 
 */
 const int LLINF = 1e18 ; 
 const int N = 505;
