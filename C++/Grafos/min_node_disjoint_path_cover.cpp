@@ -1,4 +1,4 @@
-
+//cada nó só pertence a um caminho
 const int LLINF = 1e18 ; 
 const int N = 505;
  
