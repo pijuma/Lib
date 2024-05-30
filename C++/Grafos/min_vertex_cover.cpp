@@ -1,23 +1,7 @@
-// O(V^2E) 
-/*acha fluxo máximo
-u: O nó de origem da aresta.
-v: O nó de destino da aresta.
-c: A capacidade da aresta principal que vai de u para v.
-rc: A capacidade da aresta reversa que vai de v para u.
-s: no de origem 
-sink: no destino 
-cut: acha mincut -> menor conjunto de arestas que precisamos tirar para desconectar a fonte do destino -> funciona pra se tiver peso 
-ele pega a qtd q minimiza a soma 
+/*
+grafo bipartido 
+se pegar todos os vertices exceto o min vertex cover = max independent set 
 */
-    
-#include<bits/stdc++.h>
-#define pb push_back 
-#define ss second 
-#define ff first 
-#define int long long
-#define ll long long
-using namespace std ;
- 
 const int LLINF = 1e18 ; 
 const int N = 505;
  
