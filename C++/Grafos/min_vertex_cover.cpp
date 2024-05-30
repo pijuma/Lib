@@ -113,7 +113,6 @@ int32_t main(){
             char a ; cin >> a ; 
             if(a == 'o'){
                 dinic.addEdge(i, j+n, LLINF, 0) ;
-                grau[i]++ ; grau[j+n]++ ;  
             }
         }
     }
