@@ -1,4 +1,5 @@
 /*
+unir varios jogos = mex, resolver o msm jogo = xor 
 a cada passo pode pegar uma pilha de tamanho m e quebrar em a + b tal que a != b 
 a e b viram jogos p resolver como no nim (pega xor), mas as varias opcoes de quebras sao varios jogos (usa mex) 
 queremos saber se a posicao n chega numa pos vencedora, se ela não alcança a pos 0 ent ela nunca ganha 
