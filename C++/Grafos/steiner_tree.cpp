@@ -1,4 +1,4 @@
-//computar steiner tree 
+//computar steiner tree - minimo custo da mst que cobre todos os vertices terminais e pode ou nao cobrir os demais
 
     for(int i = 0 ; i < n ; i++){
         for(int j = 0 ; j < (1<<k) ; j++) dp[i][j] = inf ; 
