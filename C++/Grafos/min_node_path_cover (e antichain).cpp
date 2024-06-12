@@ -1,7 +1,10 @@
 //cada nó só pertence a um caminho
 //pra geral -> cria uma aresta de a->b sempre que 
 // a alcança b, não apenas se a aresta a->b existe
-// a antichain é igual ao min node path cover geral 
+// a antichain (set de nós tal que n existe caminho de um pra outro)
+//é igual ao min node path cover geral 
+// pra mudar pra min node path cover geral (um nó pode fzr parte de mais de um caminho) 
+// liga a->b toda vez que a alcança b e não somente quando existe uma aresta direta 
 const int LLINF = 1e18 ; 
 const int N = 505;
  
