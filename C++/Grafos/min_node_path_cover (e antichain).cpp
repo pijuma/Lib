@@ -1,5 +1,4 @@
 //cada nó só pertence a um caminho
-// esse código é pra disjoint path cover 
 //pra geral -> cria uma aresta de a->b sempre que 
 // a alcança b, não apenas se a aresta a->b existe
 // a antichain é igual ao min node path cover geral 
