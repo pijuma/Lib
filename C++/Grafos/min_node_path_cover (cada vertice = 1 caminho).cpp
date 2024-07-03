@@ -6,7 +6,8 @@
 // pra mudar pra min node path cover geral (um nó pode fzr parte de mais de um caminho) 
 // liga a->b toda vez que a alcança b e não somente quando existe uma aresta direta 
 // se um vertice puder pertencer a 2 caminhos = min path cover geral, set de vertices
-// tal que cada vertice pertence a um caminho 
+// tal que cada vertice pertence a um caminho -> da pra calcular antichain com isso 
+// (conjunto max de nós que n tem caminho de um pro outro) 
 const int LLINF = 1e18 ; 
 const int N = 505;
  
