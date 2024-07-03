@@ -5,6 +5,8 @@
 //é igual ao min node path cover geral 
 // pra mudar pra min node path cover geral (um nó pode fzr parte de mais de um caminho) 
 // liga a->b toda vez que a alcança b e não somente quando existe uma aresta direta 
+// se um vertice puder pertencer a 2 caminhos = min path cover geral, set de vertices
+// tal que cada vertice pertence a um caminho 
 const int LLINF = 1e18 ; 
 const int N = 505;
  
