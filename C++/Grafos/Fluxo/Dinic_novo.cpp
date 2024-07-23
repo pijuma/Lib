@@ -173,7 +173,7 @@ struct Dinic {
         return flow(s, t) ;
     }
 
-    vector<pair<int,int>> recuperar_matching(){
+    vector<pair<int,int>> recuperar_matching(int source, int sink){
         vector<pair<int,int>> resp ; 
         for(auto a : edge){
             if(a.from == sink || a.from == source) continue ;
@@ -187,24 +187,26 @@ struct Dinic {
     }
 
 
-    void matching(int source, int sink){
+    void matching(int source, int sink){//source e sink precisam ser criados vertices novos
         for(int i = 1 ; i <= m ; i++){ // meninas
-            dinic.addEdge(source, i+n, 1, 0) ; 
+            addEdge(source, i+n, 1, 0) ; 
         }
     
         for(int i = 1 ; i <= n ; i++){ // meninos 
-            dinic.addEdge(i, sink, 1, 0) ; 
+            addEdge(i, sink, 1, 0) ; 
         }
     
         for(int i = 1 ; i <= k ; i++){
             int b, g ; cin >> b >> g ; 
-            //cout << "aresta " << g+n << " " << b << "\n" ; 
-            dinic.addEdge(g+n, b, 1, 0) ;
+            //cout << "aresta " << g+n << " s" << b << "\n" ; 
+            addEdge(g+n, b, 1, 0) ;
         }
 
         cout << flow(source, sink) << "\n" ; 
-        vector<pair<int,int>> recuperar_matching() ;
+        vector<pair<int,int>> ans = recuperar_matching(source, sink) ;
 
+        for(auto a : ans) cout << a.first << " " << a.second << "\n" ; 
+        
     }
 
 
