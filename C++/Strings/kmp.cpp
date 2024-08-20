@@ -1,3 +1,4 @@
+//pi[i] = maior pref [0, ...i] tal que é um sufixo de [i, i-1,...,i-k+1] 
 vector<int> table(){
 	vector<int> ans(pattern.size(), 0) ; 
 	int j = 0 ; 
