@@ -4,7 +4,6 @@ using namespace std ;
 const int maxn = 1e6 + 65 ; 
 
 // palindromo par centrado em i se i e i-1 são centros!!!
-
 vector<int> manacher_odd(string s){//calcular pra impar
 
     int n = s.size() ; 
@@ -75,8 +74,6 @@ int main(){
     string s ; cin >> s ; 
 
     manacher(s) ; 
-
-    //cout << mx << " " << id << "\n" ; 
 
     int beg = id - (mx/2), end = id + (mx/2) ; 
 
