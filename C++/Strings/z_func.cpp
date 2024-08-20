@@ -1,3 +1,4 @@
+//z[i] = maior pref começando em i que tambem eh pref da palavra original 
 vector<int> Z(string s) {
     int n = s.size();
     vector<int> z(n);
