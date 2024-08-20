@@ -1,4 +1,6 @@
 //z[i] = maior pref começando em i que tambem eh pref da palavra original 
+//ex.: aabaabaa
+//i = 3 -> AABAA e AABAABAA logo z[3] = 5
 vector<int> Z(string s) {
     int n = s.size();
     vector<int> z(n);
