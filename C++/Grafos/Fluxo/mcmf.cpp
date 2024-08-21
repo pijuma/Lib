@@ -1,4 +1,6 @@
 //mcmf pra pegar matching 
+//do source pro sink etc = usar custo 1 
+// se quiser fzr max cost pode fzr inf - c assim estamos tentando maximizar o valor
 const int INF = 0x3f3f3f3f3f3f3f3f;
 
 struct Dinitz {
@@ -86,12 +88,12 @@ struct Dinitz {
 
   vector<pair<int,int>> recuperar_matching(int source, int sink){
     vector<pair<int,int>> resp ; 
-    //cout << edges.size() << "\n" ; 
+    // ***o n que eu somo em j não é o n da struct na verdade é n/3 ****
     for(auto a : edges){
         if(a.v == sink || a.v == source) continue ; 
         if(a.u == sink || a.u == source) continue ; 
         if(a.u <= (n/3)) continue ; 
-        if(a.v > (n/3) || a.v <= 0) continue ; // /3 pq eu coloquei 3*n como n na hora de criar o dinic
+        if(a.v > (n)/3|| a.v <= 0) continue ; // /3 pq eu coloquei 3*n como n na hora de criar o dinic
         if(!a.flow) continue ; 
         resp.push_back({a.v, a.u-(n/3)}) ; 
     }
