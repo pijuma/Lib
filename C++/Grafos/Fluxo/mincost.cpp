@@ -82,4 +82,15 @@ struct Dinitz {
     }
     return total_flow;
   }
+
+  int recuperar_uso(){
+    int tot = 0 ;
+    for(auto a : edges){
+        if(!a.flow) continue ; 
+        int gasto = a.flow*a.cost ;
+        tot += gasto ;  
+    } 
+    return tot/2 ; 
+  }
+
 };
