@@ -34,7 +34,7 @@ struct ext{
         this->a = (a%MOD+MOD)%MOD;
         this->b = (b%MOD+MOD)%MOD;
     }
-    // funções
+    // funcoes
     ext conjugado() const{
         return ext(a, -b);
     }
