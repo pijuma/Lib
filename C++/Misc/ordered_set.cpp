@@ -4,7 +4,7 @@ template<typename T, typename B = null_type>
 using ordered_set = tree<T, B, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 // order_of_key(k)  : Number of items strictly smaller than k
-// find_by_order(k) : K-th element in a set (counting from zero)
+// find_by_order(k) : K-th element in a set (counting from zero) - ordena os elementos 
 
 // to swap two sets, use a.swap(b);
 #include<bits/stdc++.h>
