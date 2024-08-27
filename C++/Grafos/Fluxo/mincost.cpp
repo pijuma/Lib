@@ -1,3 +1,4 @@
+//// cuidado com n = 1 se colocar 3*n como max e 2*n + 1 pode dar 2n+1 = 3n etc
 const int INF = 0x3f3f3f3f3f3f3f3f;
 
 struct Dinitz {
