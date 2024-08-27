@@ -1,4 +1,5 @@
 //mcmf pra pegar matching 
+// cuidado com n = 1 se colocar 3*n como max e 2*n + 1 pode dar 2n+1 = 3n etc
 //do source pro sink etc = usar custo 1 
 // se quiser fzr max cost pode fzr inf - c assim estamos tentando maximizar o valor
 const int INF = 0x3f3f3f3f3f3f3f3f;
