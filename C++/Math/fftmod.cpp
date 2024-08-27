@@ -68,7 +68,7 @@ template<int M> vl convMod(const vl &a, const vl &b) {
 	return res;
 }
 
-/* Início */
+/* Inicio */
 
 #define int long long
 
