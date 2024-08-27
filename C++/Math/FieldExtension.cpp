@@ -28,7 +28,7 @@ int binomial(int a, int b){ // (a b)
 }
 
 struct ext{
-    int a, b; // a+b√P
+    int a, b; // a+braiz(P)
     // construtor
     ext(int a=0, int b=0){
         this->a = (a%MOD+MOD)%MOD;
