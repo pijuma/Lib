@@ -1,7 +1,3 @@
-#define pii pair<int, int>
-vector<vector<pii>> g(N);
-vector<bool> used(N);
-vector<ll> d(N, LLINF);
 priority_queue< pii, vector<pii>, greater<pii> > fila;
 
 void dijkstra(int k){
@@ -21,4 +17,14 @@ void dijkstra(int k){
             }
         }
     }
+}
+//k menores caminhos de 1 a n: 
+priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> fila ; 
+fila.push({0, 1}) ; 
+
+while(!fila.empty()){
+    int at = fila.top().second ; int d = fila.top().first ; fila.pop() ; 
+    if(dist[at].size() > k) continue ; //n qro mais de k 
+    dist[at].push_back(d) ; //mais um jeito de chegar em at 
+    for(auto a : grafo[at]) fila.push({d + a.second, a.first}) ; 
 }
