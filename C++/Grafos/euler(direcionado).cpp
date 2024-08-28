@@ -1,20 +1,7 @@
-#include<bits/stdc++.h>
-#define pii pair<int,int> 
-
-using namespace std ; 
-
-const int maxn = 2e5 + 5 ; 
-
 int n, m, a, b, in[maxn], out[maxn], vis[maxn] ; 
 vector<pii> grafo[maxn] ;
 vector<int> odd ;  
 stack<int> fila ; 
-
-void no_ans(){
-	cout << "IMPOSSIBLE\n" ; 
-	exit(0) ; 
-}
-
 int main(){
 
 	cin >> n >> m ; 
@@ -37,12 +24,9 @@ int main(){
 
 	if(odd.size() == 2){ // dois impares -> devemos começar por um deles -> nesse caso queremos ir de 1 a n 
 	    // ent o 1 deve ser impar
-		if(odd[0] == 1) fila.push(1) ; 
-		else if(odd[1] == 1) fila.push(1) ; 
+		if(odd[0] == 1 || odd[1] == 1) fila.push(1) ; 
 		else no_ans() ; 
-
 	}
-
 	else fila.push(1) ; 
 
 	vector<int> resp ; 
