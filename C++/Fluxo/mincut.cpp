@@ -62,9 +62,10 @@ struct Dinic {
     ll flow(int source, int sink) {
         reset_flow();
         ll ans = 0;
-        //for(lim = (1LL << 62); lim >= 1; lim /= 2)
+        for(lim = (1LL << 62); lim >= 1; lim /= 2){
         while(bfs(source, sink))
             ans += run(source, sink, LLINF);
+        }
         return ans;
     }
     void addEdge(int u, int v, ll c, ll rc) {
