@@ -1,3 +1,5 @@
+// caminho que passa por todas arestas, grafo bidi 
+// que direção da aresta eu usei? 
 void hamil(int u, int id_e){
     deubom[u] = 1 ; 
     while(grafo[u].size()){
