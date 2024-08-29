@@ -1,23 +1,6 @@
-#include<bits/stdc++.h>
-using namespace std ;
- 
-const int maxn = 2e5 + 5 ;
- 
 int n, k, mx_lvl, vis[maxn], dist[maxn], sz[maxn] ;
-long long ans, f[maxn] ;
-vector<int> grafo[maxn] ;
- 
-void dfs(int v, int p){
- 
-    sz[v] = 1 ;
- 
-    for(auto a : grafo[v]){
-        if(a == p || vis[a]) continue ;
-        dfs(a, v) ;
-        sz[v] += sz[a] ;
-    }
- 
-}
+long long ans, f[maxn] ; 
+void dfs(int v, int p) // dfs padrao pra calcular sz de comp
  
 int find_cent(int v, int p, int szz){
  
@@ -27,7 +10,6 @@ int find_cent(int v, int p, int szz){
     }
  
     return v ;
- 
 }
  
 void mk_ct(int v, int p, int type, int lvl){
@@ -52,9 +34,7 @@ void make_cent(int v, int p){
  
     int c = find_cent(v, p, sz[v]) ;
  
-    vis[c] = 1 ;
- 
-    mx_lvl = 0 ;
+    vis[c] = 1 ; mx_lvl = 0 ;
     f[0] = 1 ;
  
     for(auto a : grafo[c]){
@@ -69,22 +49,5 @@ void make_cent(int v, int p){
         if(vis[a] || a == p) continue ;
         make_cent(a, c) ;
     }
- 
-}
- 
-int main(){
- 
-    ios_base::sync_with_stdio(false) ; cin.tie(NULL) ; 
- 
-    cin >> n >> k ;
- 
-    for(int i = 1 ; i < n ; i++){
-        int a, b ; cin >> a >> b ;
-        grafo[a].push_back(b) ; grafo[b].push_back(a) ;
-    }
- 
-    make_cent(1, 0) ;
- 
-    cout << ans << "\n" ;
  
 }
