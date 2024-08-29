@@ -23,3 +23,5 @@ __builtin_clzll()
 // Number of trailing zeros
 __builtin_ctz()
 __builtin_ctzll()
+bitset<maxn> dp[maxn] ; 
+
