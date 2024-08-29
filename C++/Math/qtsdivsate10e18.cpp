@@ -1,10 +1,4 @@
 // achar a qtd de divs em raiz cubica + miller rabin p ver se é primo + crivo 
-#include<bits/stdc++.h>
-#define int long long
-#define ll long long 
- 
-using namespace std ; 
- 
 vector<int> primos = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37} ;
 map<int,int> freq ;
 
