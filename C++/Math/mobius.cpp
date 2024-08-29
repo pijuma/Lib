@@ -17,10 +17,10 @@ void mobius(){
     for(int i=4; i<MAX; i++){
         if(mu[i]!=0) continue;
         for(int j=2; j*j<=i; j++)
-            if(i%j==0)
-                if((i/j)%j!=0){
+            if(i%j==0){
+                if((i/j)%j!=0)
                     mu[i] = mu[j]*mu[i/j];
-                    break;
-                }
+                break;
+            }
     }
 }
