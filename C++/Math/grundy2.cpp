@@ -1,15 +1,4 @@
-#include<bits/stdc++.h>
-using namespace std ; 
- 
-/*
-divide a pilha em duas com diferentes valores
-*/
- 
-const int maxn = 1e6 + 5 ; 
- 
-int dp[maxn] ; 
-int freq[maxn] ; 
- 
+//divide a pilha em duas com diferentes valore  
 int mex(vector<int> a){
     for(auto b : a) freq[b]++ ; 
     int mex = 0 ; 
@@ -37,12 +26,8 @@ int main(){
  
     memset(dp, -1, sizeof(dp)) ; 
     
-    for(int i = 1 ; i <= 5000 ; i++){
-        dp[i] = solve(i)  ; 
-        //if(ans == 0) cout << i << "\n" ; 
-        //cout << ans << "\n" ; 
-    }
- 
+    for(int i = 1 ; i <= 5000 ; i++) dp[i] = solve(i)  ;
+
     int t ; cin >> t ; 
  
     while(t--){
