@@ -73,8 +73,6 @@ void dfs(int v, int p){
 
 int main(){
 
-	ios_base::sync_with_stdio(false) ; cin.tie(NULL) ;
-
 	cin >> n ; 
 
 	for(int i = 1 ; i <= n ; i++){
@@ -84,16 +82,7 @@ int main(){
 
 	dfs_alt(0, 0) ; 
 
-	// dfs_view(0, 0) ; 
-
 	dfs(0, 0) ; 
-
-	// for(int i = 0 ; i <= 8 ; i++) cout << mx[i] << " " ; 
-
-	// cout << "\n" ; 
-
 	cout << ans.size() << "\n" ; 
-
 	for(auto a : ans) cout << a << "\n" ; 
-
 }
