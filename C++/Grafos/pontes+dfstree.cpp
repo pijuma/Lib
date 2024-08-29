@@ -1,4 +1,3 @@
-
 void finding_b(int v, int p){
 
 	tin[v] = low[v] = ++ timer ; 
@@ -17,7 +16,6 @@ void finding_b(int v, int p){
 		low[v] = min(low[a.first], low[v]) ; 
 
 	}
-
 }
 
 void dfs(int v, int c){
@@ -39,10 +37,6 @@ void dfs2(int v, int p){
 }
 
 int main(){
-
-	ios_base::sync_with_stdio(false) ; cin.tie(NULL) ; 
-
-	cin >> n >> m ; 
 
 	for(int i = 1 ; i <= m ; i++){
 		cin >> a >> b ; 
@@ -74,7 +68,7 @@ int main(){
 
 	dist[p1] = 0 ; 
 
-    memset(vis, 0, sizeof vis) ; 
+   	 memset(vis, 0, sizeof vis) ; 
 
 	dfs2(p1, p1) ; 
 
