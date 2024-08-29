@@ -1,3 +1,4 @@
+// quantos caminhos tal que o vertice inicial e final tem a mesma cor passam por aquela aresta? 
 // faz p filho grande 
 // swapa a info dele com o pai 
 // faz pros pequenos mudando os valores na mao 
