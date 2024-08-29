@@ -2,6 +2,7 @@
 // pra perimetro: faz sweep no x e seg no y  (liga o intervalo do y ativo q tamo usando) 
 // desliga o valor na seg quando o intervalo fechar (nesse codigo n ta assim por ser paridade) 
 // pra perimetro pega a qtd de transições na seg tipo caras adjs 0-1 ou 1-0 
+//do perimetro se for comprimir coloca x-1, x+1, y-1, y+1 por garantia 
 struct evento{
 	int xi, xf, y, tipo ; 
 } ; 
