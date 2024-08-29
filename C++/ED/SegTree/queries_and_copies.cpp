@@ -1,7 +1,8 @@
 /*
-Set the value a in array k to x.
-Calculate the sum of values in range [a,b] in array k.
-Create a copy of array k and add it to the end of the list. */ 
+1-Set the value a in array k to x.
+2-Calculate the sum of values in range [a,b] in array k.
+3-Create a copy of array k and add it to the end of the list. 
+*/ 
 
 vector<int> root, e, d, sum ; 
  
