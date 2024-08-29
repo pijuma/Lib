@@ -1,7 +1,6 @@
 	for(int i = 0 ; i < n ; i++) cin >> v[i] ; 
  
-	int esq = (n+1)>>1 ; 
-    int dir = (n>>1) ; 
+	int esq = (n+1)>>1, dir = (n>>1) ; 
  
 	for(int mask = 0 ; mask < (1<<dir) ; mask++){
 		int s = 0 ; 
