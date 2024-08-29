@@ -1,3 +1,6 @@
+//query retangulo a, b, c, d 
+// y_1 x_1 y_2 x_2 = a, b, c, d
+// cout << Bit.query(c, d) + Bit.query(a-1, b-1) - Bit.query(a-1, d) - Bit.query(c, b-1) << "\n" ;
 struct BIT{
 
 	void upd(int x, int y, int v){
