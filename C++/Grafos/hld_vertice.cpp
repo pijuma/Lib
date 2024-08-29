@@ -1,64 +1,116 @@
-// Use it together with recursive_segtree
-const int N = 3e5+10;
-vector<vector<int>> g(N, vector<int>());
-vector<int> in(N), inv(N), sz(N);
-vector<int> peso(N), pai(N);
-vector<int> head(N), tail(N), h(N);
+long long n, q, val[maxn], tree[4*maxn], nivel[maxn], pos[maxn], pai[maxn], sz[maxn] ;
+long long head[maxn], ct, c, cam[maxn] ; 
+vector<int> grafo[maxn] ; 
+ 
+struct SEG{
+ 
+	void upd(int no, int i, int j, int pos, int valor){
+		if(i == j){
+			tree[no] = valor ; 
+			return ; 
+		}
+		if(pos <= meio) upd(esq, i, meio, pos, valor) ; 
+		else upd(dir, meio + 1, j, pos, valor) ; 
+		tree[no] = max(tree[esq], tree[dir]) ; 
+	}
+ 
+	long long query(int no, int i, int j, int a, int b){
+		if(i > b || j < a) return 0 ; 
+		if(i >= a && j <= b) return tree[no] ; 
+		return max(query(esq, i, meio, a, b), query(dir, meio + 1, j, a, b)) ;  
+	}
+ 
+} Seg ; 
+ 
+void dfs(int v, int p){
+	
+	sz[v] = 1 ; pai[v] = p ; 
+ 
+	for(auto a : grafo[v]){
+		if(a == p) continue ; 
+		nivel[a] = nivel[v] + 1 ; 
+		dfs(a, v) ; 
+		sz[v] += sz[a] ; 
+	}
+ 
+}
+ 
+void hld(int v){
+ 
+	if(!head[c]) head[c] = v ; // cabou de criar um novo caminho 
+	cam[v] = c, pos[v] = ++ct ;
+ 
+	Seg.upd(1, 1, n, pos[v], val[v]) ; 
+ 
+	int mx = -1, id = -1 ; 
+ 
+	for(auto a : grafo[v]){
+		if(a == pai[v]) continue ; 
+		if(mx < sz[a]) mx = sz[a], id = a ; 
+	} 
+ 
+	if(id != -1) hld(id) ; // continua pro maior 
+ 
+	for(auto a : grafo[v]){
+		if(a == pai[v] || a == id) continue ; 
+		c++ ; hld(a) ; // cria um novo 
+	}
+ 
+}
+ 
+ 
+int lca(int a, int b){
+ 
+	while(cam[a] != cam[b]){
+		if(nivel[head[cam[a]]] > nivel[head[cam[b]]]) a = pai[head[cam[a]]] ;
+		else b = pai[head[cam[b]]] ; 
+	}
+ 
+	if(nivel[a] > nivel[b]) return b ;
+	return a ; 
+ 
+}
+ 
+long long query_path(int a, int b){
+ 
+	long long ans = 0LL ; 
+ 
+	while(cam[a] != cam[b]){
+		ans = max(ans, Seg.query(1, 1, n, pos[head[cam[a]]], pos[a])) ; 
+		a = pai[head[cam[a]]] ; 
+	}
+ 
+	if(pos[a] == pos[b]) return max(ans, Seg.query(1, 1, n, pos[a], pos[a])) ; 
+	return max(ans, Seg.query(1, 1, n, pos[b], pos[a])) ; 
+}
+ 
+int query(int a, int b){
+	int l = lca(a, b) ; 
+	return max(query_path(a, l), query_path(b, l)) ; 
+}
+ 
+int main(){
+ 
+	ios_base::sync_with_stdio(false) ; cin.tie(NULL) ; 
+ 
+	cin >> n >> q ; 
+ 
+	for(int i = 1 ; i <= n ; i++) cin >> val[i] ; 
+ 
+	for(int i = 1 ; i < n ; i++){
+		int a, b ; cin >> a >> b ; 
+		grafo[a].push_back(b) ; grafo[b].push_back(a) ;
+	}
+ 
+	dfs(1, 0) ;
+	hld(1) ; 
+ 
+	while(q--){
+		int t, a, b ; cin >> t >> a >> b ;
+		if(t == 1) Seg.upd(1, 1, n, pos[a], b) ;
+		else cout << query(a, b) << " " ;  
+	}
+ 
+	cout << "\n" ;
 
-int tin;
-
-void dfs(int u, int p=-1, int depth=0){
-    sz[u] = 1; h[u] = depth;
-    for(auto &v: g[u]) if(v != p){
-        dfs(v, u, depth+1);
-        pai[v] = u; sz[u] += sz[v];
-        if (sz[v] > sz[g[u][0]] or g[u][0] == p) swap(v, g[u][0]);
-    }
-}
-void build_hld(int u, int p = -1) {
-    v[in[u] = tin++] = peso[u]; tail[u] = u;
-    inv[tin-1] = u;
-    for(auto &v: g[u]) if(v != p) {
-        head[v] = (v == g[u][0] ? head[u] : v);
-        build_hld(v, u);
-    }
-    if(g[u].size() > 1) tail[u] = tail[g[u][0]];
-}
-void init_hld(int root = 0) {
-    dfs(root);
-    tin = 0;
-    build_hld(root);
-    build();
-}
-void reset(){
-    g.assign(N, vector<int>());
-    in.assign(N, 0), sz.assign(N, 0);
-    peso.assign(N, 0), pai.assign(N, 0);
-    head.assign(N, 0); tail.assign(N, 0);
-    h.assign(N, 0); inv.assign(N, 0);
-
-    t.assign(4*N, 0); v.assign(N, 0);
-    lazy.assign(4*N, 0);
-}
-ll query_path(int a, int b) {
-    if(in[a] < in[b]) swap(a, b);
-
-    if(head[a] == head[b]) return query(in[b], in[a]);
-    return merge(query(in[head[a]], in[a]), query_path(pai[head[a]], b));
-}
-void update_path(int a, int b, int x) {
-    if(in[a] < in[b]) swap(a, b);
-
-    if(head[a] == head[b]) return (void)update(in[b], in[a], x);
-    update(in[head[a]], in[a], x); update_path(pai[head[a]], b, x);
-}
-ll query_subtree(int a) {
-    return query(in[a], in[a]+sz[a]-1);
-}
-void update_subtree(int a, int x) {
-    update(in[a], in[a]+sz[a]-1, x);
-}
-int lca(int a, int b) {
-    if(in[a] < in[b]) swap(a, b);
-    return head[a] == head[b] ? b : lca(pai[head[a]], b);
 }
