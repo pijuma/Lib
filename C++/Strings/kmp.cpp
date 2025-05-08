@@ -1,5 +1,5 @@
 struct KMP{
-    
+     
     vector<int> phi ;
 
     vector<int> prefix_kmp(string s){
