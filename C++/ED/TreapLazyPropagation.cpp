@@ -70,7 +70,7 @@ void merge(Node *&treap, Node *left, Node *right){
 
 void update(Node *treap, int l, int r) {
 
-    Node *a, *b, *c;  // a: [0, l); b: [l, r]; c: [r+1, )
+    Node *a, *b, *c; 
 
     split(treap, a, b, l);
 
@@ -78,7 +78,7 @@ void update(Node *treap, int l, int r) {
 
     if (b) { b->rev ^= true;}
 
-    // merge all the splits back into the main treap
+   
 
     merge(treap, a, b);
 
@@ -113,15 +113,15 @@ void solve(int TIMES){
             cin >> o;
             if(o=='R'){
                 Node *a, *b, *c, *d;
-                split(root, a, b, RR); // a = [0, RR-1] b = [RR, ...]
-                split(b, c, d, 1); // c = [RR], d = [RR+1, ...]
+                split(root, a, b, RR); 
+                split(b, c, d, 1);
                 cout << c->val;
                 merge(b, c, d);
                 merge(root, a, b);
             }else{
                 Node *a, *b, *c, *d;
-                split(root, a, b, LL); // a = [0, RR-1] b = [RR, ...]
-                split(b, c, d, 1); // c = [RR], d = [RR+1, ...]
+                split(root, a, b, LL); 
+                split(b, c, d, 1); 
                 cout << c->val;
                 merge(b, c, d);
                 merge(root, a, b);
