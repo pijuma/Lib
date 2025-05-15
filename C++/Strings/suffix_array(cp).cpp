@@ -1,3 +1,9 @@
+/*
+Menor shift ciclico -> comeca em p[0]
+checar se tem substring s em um texto t -> faz SA em t e busca binaria (caderno rosa) 
+checar se duas substrings são iguais -> função compare + sparse table 
+*/
+
 vector<int> sort_cyclic_shifts(string const& s) {
     int n = s.size();
     const int alphabet = 256;
@@ -48,4 +54,10 @@ vector<int> suffix_array_construction(string s) {
     vector<int> sorted_shifts = sort_cyclic_shifts(s);
     sorted_shifts.erase(sorted_shifts.begin());
     return sorted_shifts;
+}
+
+int compare(int i, int j, int l, int k) {
+    pair<int, int> a = {c[k][i], c[k][(i+l-(1 << k))%n]};
+    pair<int, int> b = {c[k][j], c[k][(j+l-(1 << k))%n]};
+    return a == b ? 0 : a < b ? -1 : 1;
 }
