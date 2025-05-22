@@ -3,7 +3,8 @@
 #define pii pair<int,int> 
 
 /*
-O(nlogn)
+O(nlogn) -> pode otimizar um pouco mais 
+deixando a ordenação pelo 2o termo ja automatica (cp tá assim) 
 Menor shift ciclico -> comeca em p[0]
 checar se tem substring s em um texto t -> faz SA em t e busca binaria (caderno rosa)
 checar se duas substrings são iguais -> função compare + sparse table
