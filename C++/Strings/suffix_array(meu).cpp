@@ -1,15 +1,8 @@
-#define ff first 
-#define ss second 
-#define pii pair<int,int> 
-
 /*
-O(nlogn) -> pode otimizar um pouco mais 
-deixando a ordenação pelo 2o termo ja automatica (cp tá assim) 
+O(nlogn)
 Menor shift ciclico -> comeca em p[0]
-checar se tem substring s em um texto t -> faz SA em t e busca binaria (caderno rosa)
 checar se duas substrings são iguais -> função compare + sparse table
 */
-
 void radix(vector<pair<pair<int, int>, int>> &vec){
 
     //ordena pelo segundo, conta quantos valores de cada
@@ -100,14 +93,77 @@ vector<int> suffix_array_construction(string s) {
     return sorted_shifts;
 }
 
-int main(){
-    
-    ios_base::sync_with_stdio(false) ; cin.tie(NULL) ; 
 
-    string s ; cin >> s ; 
-    vector<int> ans = suffix_array_construction(s) ;
+string s ; 
+
+int check(int pos, string p){
+    int n = s.size() ; 
+    //cout << pos << ":\n"; 
+    for(int i = 0 ; i < p.size() ; i++){
+        if(i + pos >= n) return 2 ; //terminou o sufixo
+        char a = s[(i+pos)], b = p[i]; 
+        //cout << a <<  " " << b << "\n" ; 
+        if(a == '$') return 2 ; 
+        if(a == b) continue ; 
+        if(a < b) return 2 ;
+        return -1 ; 
+    }
+    return 1 ; 
+}
+
+void sub(vector<int> &sa, string p){//p é substring em sa? 
     
-    for(auto a : ans) cout << a << " " ;
-    cout << "\n" ;
+    int ini = 0, fim = sa.size() - 1, mid, best = -1 ; 
+
+    while(ini <= fim){        
+        mid = (ini + fim)>>1 ; 
+        int c = check(sa[mid], p) ; 
+
+        if(c == 1){ // é sub 
+            best = mid ;  fim = mid - 1 ; 
+        }
+        else if(c < 0){ //p menor que sa 
+            fim = mid - 1 ; 
+        }
+        else ini = mid + 1 ; 
+
+    }
+
+    if(best == -1) {cout << "0\n" ; return ; }
+
+    ini = best, fim = sa.size()-1 ; int best2 = best ; 
+
+    while(ini <= fim){
+        mid = (ini + fim)>>1 ; 
+        int c = check(sa[mid], p) ; 
+        if(c == 1){
+            best2 = mid, ini = mid + 1 ; 
+        }
+        else if(c < 0) fim = mid - 1 ; 
+        else ini = mid + 1 ; 
+    }
+    cout << best2-best+1 << "\n" ; 
+
+}
+
+vector<int> compute_lcp(vector<int> &sa){
+
+    int n = s.size() ; int k = 0 ; 
+    vector<int> lcp(n) ;
+    vector<int> where(n) ; 
+
+    for(int i = 0 ; i < n ; i++) where[sa[i]] = i ; 
     
+    for(int i = 0 ; i < n ; i++){
+        int psa = where[i] ; //onde eu to no sa 
+        if(psa == 0){
+            k = 0 ; continue ; 
+        }
+        int pant = sa[psa-1] ; //qual pos ta antes de mim  
+        while(i + k < n && pant + k < n && s[i+k] == s[pant+k]) k++ ; 
+        lcp[psa] = k ; //lcp da posição ordenada  
+        if(k) k-- ; //pode reduzir uma unidade pro prox 
+
+    }
+    return lcp ; 
 }
