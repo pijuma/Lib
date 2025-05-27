@@ -87,8 +87,8 @@ vector<int> sort_cyclic_shifts(string const &s) {
 
 //se não quiser considerar o sufixo vazio, remover o 1o elemento
 vector<int> suffix_array_construction(string s) {
-    s += "$";
-    vector<int> sorted_shifts = sort_cyclic_shifts(s);
+    s += "#";
+    vector<int> sorted_shifts = sort_cyclic_shifts(s); 
     sorted_shifts.erase(sorted_shifts.begin());
     return sorted_shifts;
 }
@@ -98,11 +98,9 @@ string s ;
 
 int check(int pos, string p){
     int n = s.size() ; 
-    //cout << pos << ":\n"; 
     for(int i = 0 ; i < p.size() ; i++){
         if(i + pos >= n) return 2 ; //terminou o sufixo
         char a = s[(i+pos)], b = p[i]; 
-        //cout << a <<  " " << b << "\n" ; 
         if(a == '$') return 2 ; 
         if(a == b) continue ; 
         if(a < b) return 2 ;
@@ -116,7 +114,7 @@ void sub(vector<int> &sa, string p){//p é substring em sa?
     int ini = 0, fim = sa.size() - 1, mid, best = -1 ; 
 
     while(ini <= fim){        
-        mid = (ini + fim)>>1 ; 
+        mid = (ini + fim)>>1 ;  
         int c = check(sa[mid], p) ; 
 
         if(c == 1){ // é sub 
@@ -149,21 +147,51 @@ void sub(vector<int> &sa, string p){//p é substring em sa?
 vector<int> compute_lcp(vector<int> &sa){
 
     int n = s.size() ; int k = 0 ; 
-    vector<int> lcp(n) ;
-    vector<int> where(n) ; 
+    vector<int> lcp(n, 0) ;
+    vector<int> where(n, 0) ; 
 
     for(int i = 0 ; i < n ; i++) where[sa[i]] = i ; 
-    
+
     for(int i = 0 ; i < n ; i++){
         int psa = where[i] ; //onde eu to no sa 
         if(psa == 0){
             k = 0 ; continue ; 
         }
         int pant = sa[psa-1] ; //qual pos ta antes de mim  
-        while(i + k < n && pant + k < n && s[i+k] == s[pant+k]) k++ ; 
+        while(i + k < n && pant + k < n && s[i+k] == s[pant+k]){
+            k++ ;  
+        }
         lcp[psa] = k ; //lcp da posição ordenada  
         if(k) k-- ; //pode reduzir uma unidade pro prox 
 
     }
     return lcp ; 
+}
+
+int32_t main(){
+
+    string s1, s2 ; cin >> s1 >> s2 ; 
+
+    s = s1 + '$' + s2 ; 
+
+    vector<int> ans = suffix_array_construction(s) ; 
+
+    vector<int> lcp = compute_lcp(ans) ; 
+
+    int corte = s1.size() ; 
+    int mx = 0 ; int id = -1 ; 
+
+    for(int i = 1 ; i < ans.size() ; i++){
+        int j = ans[i], k = ans[i-1] ; 
+        if(j >= corte && k >= corte) continue ; 
+        if(j < corte && k < corte) continue ; 
+        if(lcp[i] > mx){
+            mx = lcp[i] ; 
+            id = j ;
+        }
+    }
+
+    for(int i = id ; i < id + mx ; i++) cout << s[i] ; 
+    cout << "\n" ; 
+
 }
