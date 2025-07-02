@@ -1,20 +1,19 @@
-#include <bits/extc++.h>
-using namespace __gnu_pbds; // or pb_ds;
-template<typename T, typename B = null_type>
-using ordered_set = tree<T, B, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+#include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
+using namespace std;
 
+template<typename T>
+using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+
+#define pii pair<int,int>
+#define int long long 
 // order_of_key(k)  : Number of items strictly smaller than k
 // find_by_order(k) : K-th element in a set (counting from zero) - ordena os elementos 
 
 // to swap two sets, use a.swap(b);
-#include<bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp> // Common file  
-#include <ext/pb_ds/tree_policy.hpp>  
-#include <functional> // for less  
-#include <iostream>  
-using namespace __gnu_pbds;  
-using namespace std;  
-  
+
 // Declaring ordered_set 
 typedef tree<int, null_type, less<int>, rb_tree_tag,  
             tree_order_statistics_node_update>  
