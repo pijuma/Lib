@@ -1,6 +1,7 @@
 /*
-a^b^c (Mod P) => a^(k*(P-1)) + j => (teo fermat) a^j 
-basta achar j -> b^c Mod (P-1) e aplicar a^j Mod P 
+e = elevado
+aebec (Mod P) => ae(k*(P-1)) + j => (teo fermat) aej 
+basta achar j -> bec Mod (P-1) e aplicar aej Mod P 
 */
 
 #include<bits/stdc++.h>
