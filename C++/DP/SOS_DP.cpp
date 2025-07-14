@@ -1,3 +1,4 @@
+//2^n*n 
 for(int mask = 0; mask < (1<<N); ++mask){
 	dp[mask][0] = A[mask];	//handle base case separately (leaf states)
 	for(int i = 0;i < N; ++i){
