@@ -23,11 +23,11 @@ ll exp(ll a, ll b, int m){
 }
 
 void calc_Hash(string s, int m, int p){
-	ll pot = 1 ; 
+	ll pot_at = 1 ; 
 	for(int i = 0 ; i < s.size() ; i++){
-		if(i == 0) Hash[i] = ((s[i]-'a'+1)*pot)%m ;
-		else Hash[i] = (Hash[i-1] + ((s[i]-'a'+1)*pot)%m)%m ; 
-		pot = (pot*p)%m ;
+		if(i == 0) Hash[i] = ((s[i]-'a'+1)*pot_at)%m ;
+		else Hash[i] = (Hash[i-1] + ((s[i]-'a'+1)*pot_at)%m)%m ; 
+		pot_at = (pot_at*p)%m ;
 	}
 }
 
