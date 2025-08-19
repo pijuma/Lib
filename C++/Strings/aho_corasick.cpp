@@ -1,17 +1,16 @@
-// https://github.com/joseleite19/icpc-notebook/blob/master/code/string/aho_corasick.cpp
 const int A = 26;
 int to[N][A];
 int ne = 2, fail[N], term[N];
-void add_string(string str, int id){
+void add_string(string str, int id){//parte da trie
     int p = 1;
     for(auto c: str){
         int ch = c - 'a'; // !
         if(!to[p][ch]) to[p][ch] = ne++;
         p = to[p][ch];
     }
-    term[p]++;
+    term[p]++;//alguem termina nesse vertice - pode guardar id num vetor/set tbm
 }
-void init(){
+void init(){//construir suffix links e arrumar o automato 
     for(int i = 0; i < ne; i++) fail[i] = 1;
     queue<int> q; q.push(1);
     int u, v;
