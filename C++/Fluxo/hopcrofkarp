@@ -1,0 +1,80 @@
+int n, m;
+vector<int> g[20100];
+int dist[20100], matchL[20100], matchR[20100];
+ 
+bool bfs(){
+    queue<int> fila;
+    fr1(i, n){
+        if(matchL[i]==0){
+            dist[i]=0;
+            fila.push(i);
+        }else{
+            dist[i] = 0x3f3f3f3f;
+        }
+    }
+ 
+    dist[0]=0x3f3f3f3f;
+ 
+    while(!fila.empty()){
+        int u = fila.front();
+        fila.pop();
+        if(dist[u]<dist[0]){
+            for(int v : g[u]){
+                if(dist[matchR[v]]==0x3f3f3f3f){
+                    dist[matchR[v]] = dist[u] +1;
+                    fila.push(matchR[v]);
+                }
+            }
+        }
+    }
+ 
+    return dist[0]!=0x3f3f3f3f;
+}
+bool dfs(int u) {
+    if (u != 0) {
+        for (int v : g[u]) {
+            if (dist[matchR[v]] == dist[u] + 1 && dfs(matchR[v])) {
+                matchL[u] = v;
+                matchR[v] = u;
+                return true;
+            }
+        }
+        dist[u] = INF;
+        return false;
+    }
+    return true;
+}
+ 
+int hopcroftKarp(){
+    int matching = 0;
+    while(bfs()){
+       // cout << "oi\n";
+        fr1(i, n){
+            if(matchL[i] == 0 && dfs(i)){
+                matching++;
+            }
+        }
+    }
+    return matching;
+}
+ 
+void solve(int TIMES){
+    cin >> n >> m;
+ 
+    fr(i, m){
+        int a, b;
+        cin >> a >> b;
+        a++;
+        b++;
+        g[a].pb(b+10000);
+    }
+ 
+    
+   // cout << (ans=hopcroftKarp()) << '\n';
+ 
+    if(hopcroftKarp()==n){
+        cout << "YES\n";
+    }else{
+        cout << "NO\n";
+    }
+}
