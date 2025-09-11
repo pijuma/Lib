@@ -1,6 +1,10 @@
 int n, mxlvl, k1, k2 ; 
-ll ans, bit[maxn] ; 
+ll ans ; 
+ll bit[maxn] ; 
 int sz[maxn], vis[maxn], min_d[maxn], nivel[maxn] ; 
+int pai[maxn], cor[maxn] ; 
+vector<int> grafo[maxn] ; 
+ 
 struct BIT{
  
     void upd(int pos, int val){
@@ -17,7 +21,16 @@ struct BIT{
  
 } Bit ; 
  
-void dfs(int v, int p) // dfs padrao pra sz comp
+void dfs(int v, int p){
+    
+    sz[v] = 1 ; 
+ 
+    for(auto a : grafo[v]){
+        if(a == p || vis[a]) continue ;
+        dfs(a, v) ; sz[v] += sz[a] ; 
+    }
+ 
+}
  
 void reroot(int neww, int old){
     if(old == -1) return ; 
@@ -32,7 +45,9 @@ int find_cent(int v, int szz, int p){
         reroot(a, v) ; 
         return find_cent(a, szz, v) ; 
     }
+ 
     return v ; 
+ 
 }
  
 void add(int t, int v, int p, int lvl){
@@ -55,7 +70,7 @@ void make_cent(int v, int p = -1){
  
     int cent = find_cent(v, sz[v], p) ; 
     vis[cent] = 1 ; 
-    
+ 
     mxlvl = 0 ; 
     Bit.upd(1, -Bit.query(1, 1) + 1) ; 
  
@@ -71,13 +86,23 @@ void make_cent(int v, int p = -1){
         if(a == cent || vis[a]) continue ; 
         make_cent(a, cent) ; 
     }
-    //if(p != -1) sz[p] += sz[v] ; 
     
 }
  
 int main(){
-    cin >> n >> k1 >> k2 ; //ler grafo 
+ 
+    ios_base::sync_with_stdio(false) ; cin.tie(NULL) ; 
+ 
+    cin >> n >> k1 >> k2 ;
+ 
+    for(int i = 1 ; i < n ; i++){
+        int a, b ; cin >> a >> b ; 
+        grafo[a].push_back(b) ; grafo[b].push_back(a) ; 
+    }
+ 
     dfs(1, -1) ; 
     make_cent(1) ; 
+ 
     cout << ans << "\n" ; 
+ 
 }
