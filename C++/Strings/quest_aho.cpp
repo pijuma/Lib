@@ -1,5 +1,5 @@
 /*
-F:number of length-L lowercase English strings that contain all of S1​ S2 SN​ as substrings.
+F:number of length-L lowercase English strings that contain all of Si as substrings
 N strings e um inteiro L 
 quantas strings modulo mod de tamanho L 
 tem essas strings como substrings 
