@@ -1,3 +1,5 @@
+//por padrao k = i + j 
+//se quer i-j=k inverte o vetor do j 
 const int maxn = 2e5 + 5 ; 
 const ld PI = acos(-1) ;
  
