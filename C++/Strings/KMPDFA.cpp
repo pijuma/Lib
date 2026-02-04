@@ -55,7 +55,6 @@ struct KMP{
             for(int j = 0 ; j <= n+1 ; j++){//onde to no automato
                 for(int c = 0 ; c < 26 ; c++){//qual letra to add
                     if(!dp[i-1][j]) continue ; 
-                    //cout << i << " " << dfa[j][c] << " " << dp[i-1][j] << "\n"  ;
                     dp[i][dfa[j][c]] = (dp[i][dfa[j][c]] + dp[i-1][j])%mod ; 
                 }
             }
