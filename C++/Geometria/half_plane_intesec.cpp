@@ -1,4 +1,5 @@
 #define ld long double 
+
 const ld EPS = 1e-6;
 const ld LLINF = 1e12;
 const long double INF = 1e18L;
@@ -150,13 +151,53 @@ int ccw(point a, point b, point e){ // -1=dir; 0=collinear; 1=esq;
     return (tmp > EPS) - (tmp < -EPS);
 }
 
-// TOMAR CUIDADO COM ORIENTAÇÃO
-/*Nesse caso por ex precisa garantir que o ponto (0, 0) esta sempre do mesmo lado...*/
- for(int i = 1 ; i <= n ; i++){
-      double x1, x2, y1, y2 ; 
-      cin >> x1 >> y1 >> x2 >> y2 ; 
-      point p1(x1, y1), p2(x2, y2) ;
-      //ponto (0, 0) com orientação continua
-      if(ccw(p1, p2, point(0, 0)) == -1) swap(p1, p2) ; 
-      ret[i] = line(p1, p2) ; 
- }
+bool test(int mid){
+    
+    vector<Halfplane> at ; 
+
+    for(int i = 1 ; i <= mid ; i++){
+        at.pb(Halfplane(ret[i].p1, ret[i].p2)) ; 
+    }
+
+    auto ans = hp_intersect(at) ;
+
+    if(ans.empty()) return 0 ; 
+
+    //qual maior dist pra algum vertice? 
+    ld mx = 0.000 ; 
+
+    for(auto a : ans){
+        if(norm(a) - d > EPS) return 1 ; 
+    }
+
+    
+    return 0 ; 
+
+}
+
+void solve(){
+
+    cin >> n >> d ; 
+
+    for(int i = 1 ; i <= n ; i++){
+        double x1, x2, y1, y2 ; 
+        cin >> x1 >> y1 >> x2 >> y2 ; 
+        point p1(x1, y1), p2(x2, y2) ;
+        //ponto (0, 0) com orientação continua
+		//tomar cuidado para manter a mesma orientação
+        if(ccw(p1, p2, point(0, 0)) == -1) swap(p1, p2) ; 
+        ret[i] = line(p1, p2) ; 
+    }
+
+    int ini = 1, fim = n, mid, best = n+1 ; 
+
+    while(ini <= fim){
+        mid = (ini + fim)>>1 ; 
+        if(test(mid)) ini = mid + 1 ; 
+        else best = min(best, mid), fim = mid - 1 ; 
+    }
+
+    if(best == n+1) cout << "*\n" ; 
+    else cout << best << "\n" ;
+    
+}
