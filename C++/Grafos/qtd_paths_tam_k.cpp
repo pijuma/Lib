@@ -1,53 +1,43 @@
-int n, k, mx_lvl, vis[maxn], dist[maxn], sz[maxn] ;
-long long ans, f[maxn] ; 
-void dfs(int v, int p) // dfs padrao pra calcular sz de comp
- 
-int find_cent(int v, int p, int szz){
- 
-    for(auto a : grafo[v]){
-        if(vis[a] || a == p || 2*sz[a] <= szz) continue ;
-        return find_cent(a, v, szz) ;
-    }
- 
-    return v ;
+vector<int> cnt, path;
+
+void dfs(int u, int k, int d=0, int p=-1) {
+    //if(d > k+3) return ; -> tentar ignorar se ficar muito maior que k 
+    path.push_back(d);
+    for (int v : g[u]) if (v != p and !rem[v]) dfs(v, k, d+1, u);
 }
- 
-void mk_ct(int v, int p, int type, int lvl){
- 
-    mx_lvl = max(mx_lvl, lvl) ;
- 
-    if(lvl > k) return ;
- 
-    if(type) f[lvl]++ ;
-    else ans += f[k-lvl] ;
- 
-    for(auto a : grafo[v]){
-        if(vis[a] || a == p) continue ;
-        mk_ct(a, v, type, lvl + 1) ;
-    }
- 
+
+int dfs_sz(int u, int p=-1) {
+    sz[u] = 1;
+    for (int v : g[u]) if (v != p and !rem[v]) sz[u] += dfs_sz(v, u);
+    return sz[u];
 }
- 
-void make_cent(int v, int p){
- 
-    dfs(v, p) ;
- 
-    int c = find_cent(v, p, sz[v]) ;
- 
-    vis[c] = 1 ; mx_lvl = 0 ;
-    f[0] = 1 ;
- 
-    for(auto a : grafo[c]){
-        if(vis[a] || a == p) continue ;
-        mk_ct(a, c, 0, 1) ;
-        mk_ct(a, c, 1, 1) ;
+
+int centroid(int u, int p, int size) {
+    for (int v : g[u]) if (v != p and !rem[v] and 2 * sz[v] > size)
+        return centroid(v, u, size);
+    return u;
+}
+
+ll decomp(int u, int k) {
+    int c = centroid(u, u, dfs_sz(u));
+    rem[c] = true;
+
+    ll ans = 0;
+
+    cnt.resize(sz[u]);
+    fill(cnt.begin(), cnt.end(), 0);
+
+    cnt[0] = 1;
+    for (int v : g[c]) if (!rem[v]) {
+        path.clear();
+        dfs(v, k);
+        // d1 + d2 + 1 == k
+        //passo por todos add na resp dps incluindo ele 
+        for (int d : path) if (0 <= k-d-1 and k-d-1 < sz[u])
+            ans += cnt[k-d-1];
+        for (int d : path) cnt[d+1]++;
     }
- 
-    for(int i = 1 ; i <= mx_lvl ; i++) f[i] = 0 ;
- 
-    for(auto a : grafo[c]){
-        if(vis[a] || a == p) continue ;
-        make_cent(a, c) ;
-    }
- 
+
+    for (int v : g[c]) if (!rem[v]) ans += decomp(v, k);
+    return ans;
 }
