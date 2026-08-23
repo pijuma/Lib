@@ -1,3 +1,4 @@
+// MCMF<long long> flow(4);
 template <class T = int>
 class MCMF {
 public:
@@ -7,7 +8,7 @@ public:
         T cap, cost;
     };
 
-    MCMF(int size) {
+    MCMF(int size) {// size tem que ser um a mais que sink 
         n = size;
         edges.resize(n);
         pot.assign(n, 0);
@@ -18,13 +19,17 @@ public:
     std::pair<T, T> mcmf(int src, int sink) {
         std::pair<T, T> ans(0, 0);
         if(!SPFA(src, sink)) return ans;
+
         fixPot();
         // can use dijkstra to speed up depending on the graph
+        //quando tiver aresta de peso negativo (sem ciclo) usar SPFA
+        int ctr = 0 ; 
         while(SPFA(src, sink)) {
+            if(ctr > c) break ; 
             auto flow = augment(src, sink);
             ans.first += flow.first;
             ans.second += flow.first * flow.second;
-            fixPot();
+            fixPot(); ctr++ ; 
         }
         return ans;
     }
@@ -43,7 +48,7 @@ private:
     std::vector<T> dist, pot;
     std::vector<bool> visit;
 
-    /*bool dij(int src, int sink) {
+    /*bool dij(int src, int sink) {//usar quando custo negativo 
         T INF = std::numeric_limits<T>::max();
         dist.assign(n, INF);
         from.assign(n, -1);
@@ -71,12 +76,16 @@ private:
         return dist[sink] < INF;
     }*/
 
+    //pega o caminho que o SPFA/dij acabou de encontrar
+    //pega o quanto de fluxo pode passar e atualiza o grafo residual 
     std::pair<T, T> augment(int src, int sink) {
         std::pair<T, T> flow = {list[from[sink]].cap, 0};
+        //descobre o "gargalo" - capacidade max que pode passar 
         for(int v = sink; v != src; v = list[from[v]^1].to) {
             flow.first = std::min(flow.first, list[from[v]].cap);
             flow.second += list[from[v]].cost;
         }
+        //manda o fluxo -> pode recuperar quais fazem parte pegando em quem subtraiu
         for(int v = sink; v != src; v = list[from[v]^1].to) {
             list[from[v]].cap -= flow.first;
             list[from[v]^1].cap += flow.first;
