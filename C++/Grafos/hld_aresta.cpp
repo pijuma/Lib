@@ -72,6 +72,29 @@ void hld(int v){
 
 }
 
+// se for em range (updatar arestas no caminho etc) 
+
+void upd_path(int a, int b, int val, int pegab){//b eh o lca 
+
+    while(camin[a] != camin[b]){
+        Seg.upd(1, 1, n, pos[head[camin[a]]], pos[a], val) ; 
+        a = pai[head[camin[a]]] ; //muda pro caminho de cima 
+    }
+
+    if(pos[a] == pos[b]) return ; 
+
+    Seg.upd(1, 1, n, pos[b]+pegab, pos[a], val) ; 
+
+}
+
+
+
+void upd(int a, int b, int val){
+    int l = lca(a, b) ; 
+    upd_path(a, l, val, 1) ; upd_path(b, l, val, 1) ; 
+}
+
+//se for num ponto só 
 void update(int a, int b){ //updata o de maior nivel 
 	
 	if(nivel[edge_ind[a].first] < nivel[edge_ind[a].second]) swap(edge_ind[a].first, edge_ind[a].second) ; 
