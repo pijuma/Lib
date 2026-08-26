@@ -4,3 +4,5 @@ int uniform(int l, int r){
 	uniform_int_distribution<int> uid(l, r);
 	return uid(rng);
 }
+
+// use shuffle(a.begin(), a.end(), rng) para permutacao aleatoria
