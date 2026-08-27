@@ -1,4 +1,3 @@
-// Ternary
 ld l = -1e4, r = 1e4;
 int iter = 100;
 while(iter--){
