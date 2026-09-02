@@ -1,0 +1,127 @@
+struct RETA{
+    int k, x ; 
+};
+
+struct T{
+    RETA reta ;
+    int max_esq, max_dir, bestVal, bestPos ;
+    bool tem_linha ; 
+};
+
+struct SEG{
+
+    int f(RETA reta, int i){
+        return reta.k*i + reta.x ;  
+    }
+
+    void build(int no, int i, int j){
+        tree[no].reta.x = tree[no].reta.k = -inf ; 
+        tree[no].max_dir = j, tree[no].max_esq = i ; 
+        tree[no].bestVal = inf ; tree[no].bestPos = -1 ; tree[no].tem_linha = 0 ; 
+        if(i == j) return ; 
+        build(esq, i, meio) ; build(dir, meio + 1, j) ; 
+    }
+
+    void tentar(int no, int pos, int val){
+        if(pos == -1) return ; 
+        if (val < tree[no].bestVal ||
+            (val == tree[no].bestVal && pos > tree[no].bestPos)) {
+            tree[no].bestVal = val;
+            tree[no].bestPos = pos;
+        }
+    }
+
+    void pull(int no, int i, int j){
+        
+        //pegar os valores dos filhos que ainda existem 
+        if (i != j) {
+            if (tree[esq].max_esq != -1)
+                tree[no].max_esq = tree[esq].max_esq;
+            else
+                tree[no].max_esq = tree[dir].max_esq;
+
+            if (tree[dir].max_dir != -1)
+                tree[no].max_dir = tree[dir].max_dir;
+            else
+                tree[no].max_dir = tree[esq].max_dir;
+        }
+
+        tree[no].bestPos = -1 ; tree[no].bestVal = inf ; 
+
+        if(tree[no].tem_linha && tree[no].max_esq != -1){//com a reta no proprio no
+            int pe = tree[no].max_esq, pd = tree[no].max_dir ; 
+            tentar(no, pe, f(tree[no].reta, pe)) ; 
+            tentar(no, pd, f(tree[no].reta, pd)) ; 
+        }
+
+        if(i != j){//melhor valor nos filhos? 
+            tentar(no, tree[esq].bestPos, tree[esq].bestVal) ; 
+            tentar(no, tree[dir].bestPos, tree[dir].bestVal) ; 
+        }
+    }
+
+    void att(int no, int i, int j, RETA r){
+        //se nao tem linha -> essa passa a ser a nova -> atualizo pros fi
+        if(!tree[no].tem_linha){
+            tree[no].tem_linha = 1 ; 
+            tree[no].reta = r ; 
+            
+            pull(no, i, j) ; return ;
+
+        }
+    
+        //vejo se a reta nova eh mlr q a antiga 
+
+        bool novaMelhorEsq =
+        f(r, i) < f(tree[no].reta, i);
+
+        bool novaMelhorMeio =
+            f(r, meio) < f(tree[no].reta, meio);
+
+        if(novaMelhorMeio) swap(r, tree[no].reta) ;
+        
+        if(i != j){
+            if(novaMelhorEsq != novaMelhorMeio) att(esq, i, meio, r) ; 
+            else att(dir, meio + 1, j, r) ; 
+        }
+
+        pull(no, i, j) ; 
+    
+    }
+
+    void addReta(int no, int i, int j, int a, int b, RETA reta){
+        if(i > b || j < a) return ; 
+        if(a <= i && b >= j){
+            
+            att(no, i, j, reta) ; 
+
+            pull(no, i, j) ; 
+
+            return ; 
+
+        }
+        
+        addReta(esq, i, meio, a, b, reta) ; addReta(dir, meio + 1, j, a, b, reta) ; 
+        
+        pull(no, i, j) ; 
+    }
+
+    void set_vis(int no, int i, int j, int pos){
+        if(i == j){ //nao posso mais usar 
+            tree[no].max_dir = tree[no].max_esq = -1 ; 
+            tree[no].bestPos = -1 ; tree[no].bestVal = inf ;
+            return ; 
+        }
+        if(pos <= meio) set_vis(esq, i, meio, pos) ; 
+        else set_vis(dir, meio + 1, j, pos) ; 
+
+        pull(no, i, j) ; //atualizar o nó atual qd filhos mudaram 
+
+    }
+
+    pii query(int no, int i, int j){
+        return {tree[no].bestPos, tree[no].bestVal} ; 
+    }
+
+
+}Seg ;
