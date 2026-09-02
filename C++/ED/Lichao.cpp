@@ -1,4 +1,3 @@
-// https://codeforces.com/contest/319/problem/C
 // motoserra com uma bateria q dura uma unidade
 // qd vc corta uma arvore inteira i vc ganha bi
 // preço p recarregar é o bj do maior j tal q vc cortou totalment a arvore j (j maior arvore em id q vc ja cortou)
@@ -9,16 +8,6 @@
 // a seg retorna o menor valor
 // dpi = min(dpj + hi*bj)
 // dp[i] = query(hi) ; a = bi, b = dp[i] ; - hi eh o x
-#include<bits/stdc++.h>
-#define int long long
-#define esq (2*no)
-#define dir ((2*no)+1)
-#define meio ((i+j)>>1)
-using namespace std ;
-
-const int maxn = 3e5 + 5 ;
-const int inf = 2e9 + 5 ;
-
 struct T{
     int a, b ;
 };
@@ -59,10 +48,6 @@ struct SEG{
 } Seg ;
 
 int32_t main(){
-
-    cin >> n ;
-
-    vector<int> vec ;
 
     T null ; null = {inf, inf} ;
 
