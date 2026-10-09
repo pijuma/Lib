@@ -9,6 +9,7 @@
 // pos[i] responde a qual vertice da arvore vertice i pertence
 // Arvore tem no maximo 2n vertices
 //0..B-1 sao blocos, B, T-1 articulações
+//nos folhas na blockcut ou tem articulacao+1folha ou sao mais vertices e nenhum eh folha
 struct block_cut_tree {
     vector<vector<int>> g, blocks, tree;
     vector<vector<pair<int, int>>> edgblocks;
