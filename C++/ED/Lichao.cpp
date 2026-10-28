@@ -1,5 +1,6 @@
 // diferente do cht nao precisa que a seja crescente etc.
 // a seg retorna o menor valor
+// TOMAR CUIDADO o dominio i, j eh em cima do valor que vc consulta pra x
 // dpi = min(dpj + hi*bj)
 // dp[i] = query(hi) ; a = bi, b = dp[i] ; - hi eh o x
 struct T{
