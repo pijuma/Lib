@@ -1,10 +1,4 @@
-// motoserra com uma bateria q dura uma unidade
-// qd vc corta uma arvore inteira i vc ganha bi
-// preço p recarregar é o bj do maior j tal q vc cortou totalment a arvore j (j maior arvore em id q vc ja cortou)
-// a cada unidade vc paga bj p recarregar
-// b's são decrescentes
-// qual o valor min q vc gasta p cortar a ultima arvore 1o (b dela é 0)
-// smp mlr cortar mais a direita
+// diferente do cht nao precisa que a seja crescente etc.
 // a seg retorna o menor valor
 // dpi = min(dpj + hi*bj)
 // dp[i] = query(hi) ; a = bi, b = dp[i] ; - hi eh o x
